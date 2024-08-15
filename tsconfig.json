@@ -1,0 +1,37 @@
+{
+	"compilerOptions": {
+		"outDir": "dist",
+		"baseUrl": ".",
+		"module": "NodeNext",
+		"target": "ESNext",
+		"useDefineForClassFields": false,
+		"moduleResolution": "NodeNext",
+		"rootDir": "./",
+		"paths": {
+			"#lib/*": ["./*"]
+		},
+		"allowSyntheticDefaultImports": true,
+		"alwaysStrict": true,
+		"declaration": true,
+		"declarationMap": true,
+		"esModuleInterop": true,
+		"importHelpers": false,
+		"incremental": true,
+		"newLine": "lf",
+		"noEmitHelpers": false,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitReturns": true,
+		"isolatedModules": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"verbatimModuleSyntax": true,
+		"preserveConstEnums": true,
+		"pretty": true,
+		"removeComments": false,
+		"skipLibCheck": true,
+		"resolveJsonModule": true,
+		"sourceMap": true,
+		"strict": true
+	},
+	"exclude": ["node_modules", "dist", "scripts"]
+}

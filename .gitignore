@@ -1,0 +1,7 @@
+## Production
+node_modules/
+dist/
+
+## Environment variables
+.env
+yarn-error.log
