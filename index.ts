@@ -4,6 +4,12 @@ import { constructToken, isInvalidValue } from './utils/index.js';
 import { defaultStrategy } from './strategies.js';
 import { ResolverMixin, type MixinResolvableType } from './resolvers/index.js';
 import { ParseError, ParseErrorCode } from './structs/index.js';
+
+export * from './strategies.js';
+export * from './typings.js';
+export * from './resolvers/index.js';
+export * from './structs/index.js';
+export * from './utils/index.js';
 /**
  * Xử lý ban đầu input thành `Args` của lib lexure để thuận tiện cho việc xử lý khác.
  * LƯU Ý: Đây KHÔNG phải là args của người dùng, vì tên lệnh vẫn còn.

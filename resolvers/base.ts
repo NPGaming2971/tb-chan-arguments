@@ -104,4 +104,4 @@ type SubcommandResolverOptions<T extends Command = Command> = {
 	display?: (command: T) => string;
 };
 
-export type BaseResolvableType = ExtractResolvableTypes<typeof BaseResolver>
+export type BaseResolvableType = ExtractResolvableTypes<typeof BaseResolver>;

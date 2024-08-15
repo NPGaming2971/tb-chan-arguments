@@ -1,4 +1,5 @@
 import type { Command } from '#lib/typings.js';
+import { formatParseError } from '#lib/utils/fn.js';
 
 export class ParseError<T extends Command = Command> extends Error {
 	name: string = 'ParseError';
@@ -6,6 +7,7 @@ export class ParseError<T extends Command = Command> extends Error {
 	input?: string;
 	argId: string;
 	command: T;
+	syntax: string;
 
 	constructor(code: ParseErrorCode | string, { argId, command, input, message }: ParseErrorOptions<T>) {
 		super();
@@ -16,6 +18,7 @@ export class ParseError<T extends Command = Command> extends Error {
 		this.code = Reflect.get(ParseErrorCode, code) || code;
 		if (!code) this.code = 'Unknown';
 		this.message = message ?? `Xử lý tham số '${argId}' thất bại.`;
+		this.syntax = formatParseError(command, argId);
 	}
 }
 

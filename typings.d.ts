@@ -1,5 +1,5 @@
 import type { Token, Args } from 'lexure';
-import type { MessageArgumentType } from './utils/constants.js';
+import type { MessageArgumentType } from './utils/constants.ts';
 import type { GuildChannel, GuildMember, Message, Role, User } from 'discord.js';
 
 /**
