@@ -75,7 +75,7 @@ export class BaseResolver {
 
 		subcommand = locateTargetSubcommand?.(input, command.subcommands ?? []);
 
-		if (!subcommand) return subcommand;
+		if (subcommand) return subcommand;
 		throw new ResolveError(
 			ResolveErrorCode.SubcommandResolveFailed,
 			input,

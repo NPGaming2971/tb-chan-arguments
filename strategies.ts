@@ -39,11 +39,13 @@ export function manyStrategy(options: ManyStrategyArgs): StrategyFunction {
 		const resolvedArgs = [];
 
 		for (let token of tokens) {
-			const resolved = await resolveFn.call(null, token.value, resolvable);
+			try {
+				const resolved = await resolveFn.call(null, token.value, resolvable);
 
-			if (resolved.isOk()) {
-				resolvedArgs.push(resolved.unwrap());
-			} else break;
+				resolvedArgs.push(resolved);
+			} catch {
+				break;
+			}
 		}
 
 		if (absolute && resolvedArgs.length < times) {
@@ -86,16 +88,19 @@ export function accumulateStrategy({ allowedErrors = 0, ignoreSuccess = 0 }: Acc
 		const tokens = [arg];
 
 		while (true) {
-			const resolved = await resolveFn.call(null, joinTokens(tokens), resolvable);
-			if (resolved.isOk()) ignoreSuccess--;
-			else errCount--;
+			try {
+				const resolved = await resolveFn.call(null, joinTokens(tokens), resolvable);
+				ignoreSuccess--;
 
-			if (ignoreSuccess < 0 || allowedErrors < 0) {
-				errCount = allowedErrors;
-				unshift(1);
-				return resolved;
-			} else {
-				tokens.push(...args.many(1));
+				if (ignoreSuccess < 0 || allowedErrors < 0) {
+					errCount = allowedErrors;
+					unshift(1);
+					return resolved;
+				} else {
+					tokens.push(...args.many(1));
+				}
+			} catch {
+				errCount--;
 			}
 		}
 	};
