@@ -46,6 +46,7 @@ export class Amount {
 	private static parse(pattern: string): number {
 		let result = 0;
 		let lastUnit = null;
+		let valid = false;
 
 		pattern = pattern.replace(Amount.kCommaRegex, '').replace(Amount.kAanRegex, '1');
 
@@ -55,6 +56,7 @@ export class Amount {
 			if (token !== undefined) {
 				result += Number(i) * token;
 				lastUnit = token;
+				valid = true;
 			}
 
 			if (!units?.length) {
@@ -62,6 +64,6 @@ export class Amount {
 			}
 		}
 
-		return result;
+		return valid ? result : NaN;
 	}
 }

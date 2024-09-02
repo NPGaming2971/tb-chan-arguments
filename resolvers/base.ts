@@ -56,13 +56,18 @@ export class BaseResolver {
 		return offset;
 	}
 	static [MessageArgumentType.Amount](input: string) {
-		const { amount } = new Amount(input);
+		try {
+			const initial = BaseResolver[MessageArgumentType.Number](input);
+			return initial;
+		} catch (err) {
+			const { amount } = new Amount(input);
 
-		if (isNaN(amount)) {
-			throw new ResolveError(ResolveErrorCode.DurationResolveFailed, input, `Không thể xử lý '${input}' thành 1 khoảng`);
+			if (isNaN(amount)) {
+				throw new ResolveError(ResolveErrorCode.DurationResolveFailed, input, `Không thể xử lý '${input}' thành 1 khoảng`);
+			}
+
+			return amount;
 		}
-
-		return amount;
 	}
 	static [MessageArgumentType.Subcommand]<T extends Command<T> = Command>(
 		input: string,

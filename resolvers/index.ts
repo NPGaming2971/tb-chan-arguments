@@ -18,7 +18,7 @@ export type MixinResolvableType = BaseResolvableType & DiscordResolvableType;
 export function choiceArgs(...choices: string[]) {
 	return (input: string) => {
 		const result = choices.map((e) => e.toLowerCase()).includes(input.toLowerCase());
-		if (!input) {
+		if (!result) {
 			throw new ResolveError(
 				'ChoiceArgumentFailed',
 				input,
@@ -26,7 +26,7 @@ export function choiceArgs(...choices: string[]) {
 			);
 		}
 
-		return result;
+		return input;
 	};
 }
 
