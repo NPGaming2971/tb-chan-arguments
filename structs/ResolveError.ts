@@ -1,5 +1,5 @@
 export class ResolveError extends Error {
-	name: string = 'ResolveError';
+	override name: string = 'ResolveError';
 	code: string;
 	input: string;
 

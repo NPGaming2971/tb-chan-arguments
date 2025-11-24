@@ -75,10 +75,10 @@ export class BaseResolver {
 	) {
 		let subcommand: T | Command | null = null;
 
-		const subcommands = locateSubcommands?.(input, command) ?? command.subcommands;
+		const subcommands = locateSubcommands?.(command) ?? command.subcommands;
 		if (!subcommands) throw new ResolveError(ResolveErrorCode.SubcommandResolveFailed, input, `Không thể xử lý '${input}' thành 1 subcommand.`);
 
-		subcommand = locateTargetSubcommand?.(input, command.subcommands ?? []);
+		subcommand = locateTargetSubcommand?.(input, subcommands ?? []);
 
 		if (subcommand) return subcommand;
 		throw new ResolveError(
@@ -105,7 +105,7 @@ function defaultLocateTargetSubcommand<T extends Command>(input: string, command
 type SubcommandResolverOptions<T extends Command = Command> = {
 	command: T;
 	locateTargetSubcommand?: (input: string, commands: T[]) => T | null;
-	locateSubcommands?: (input: string, command: T) => T[];
+	locateSubcommands?: (command: T) => T[];
 	display?: (command: T) => string;
 };
 

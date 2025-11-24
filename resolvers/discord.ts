@@ -146,9 +146,9 @@ async function getMessageFromChannel(
 	originalAuthor: User
 ): Promise<Message | null> {
 	const channel = client.channels.cache.get(channelId);
-	if (!channel || channel.type === lib.ChannelType.GuildCategory || channel.type === lib.ChannelType.GroupDM) return null;
+	if (!channel || !channel.isTextBased()) return null;
 
-	if (!(channel.type === lib.ChannelType.GuildText, lib.ChannelType.GuildAnnouncement || channel.type === lib.ChannelType.GuildAnnouncement)) {
+	if (![lib.ChannelType.GuildText, lib.ChannelType.GuildAnnouncement].includes(channel.type)) {
 		return null;
 	}
 
@@ -163,4 +163,4 @@ async function getMessageFromChannel(
 	return channel.messages.fetch(messageId);
 }
 
-export type DiscordResolvableType = ExtractResolvableTypes<typeof DiscordResolver>
+export type DiscordResolvableType = ExtractResolvableTypes<typeof DiscordResolver>;

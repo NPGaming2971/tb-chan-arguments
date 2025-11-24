@@ -28,10 +28,15 @@
 		"preserveConstEnums": true,
 		"pretty": true,
 		"removeComments": false,
+		"experimentalDecorators": true,
 		"skipLibCheck": true,
 		"resolveJsonModule": true,
 		"sourceMap": true,
-		"strict": true
+		"strict": true,
+		"allowUnreachableCode": false,
+		"allowUnusedLabels": false,
+		"exactOptionalPropertyTypes": false,
+		"noImplicitOverride": true
 	},
 	"exclude": ["node_modules", "dist", "scripts"]
 }

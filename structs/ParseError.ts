@@ -2,7 +2,7 @@ import type { Command } from '#lib/typings.js';
 import { formatParseError } from '#lib/utils/fn.js';
 
 export class ParseError<T extends Command = Command> extends Error {
-	name: string = 'ParseError';
+	override name: string = 'ParseError';
 	code: string;
 	input?: string;
 	argId: string;

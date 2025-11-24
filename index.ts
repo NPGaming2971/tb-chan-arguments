@@ -1,6 +1,6 @@
 import { Lexer, Parser, prefixedStrategy, Args, type Token, joinTokens } from 'lexure';
 import type { Command, UnionToIntersection, ValuesType } from './typings.js';
-import { constructToken, isInvalidValue } from './utils/index.js';
+import { constructToken, isInvalidValue, MessageArgumentType } from './utils/index.js';
 import { defaultStrategy } from './strategies.js';
 import { ResolverMixin, type MixinResolvableType } from './resolvers/index.js';
 import { ParseError, ParseErrorCode } from './structs/index.js';
@@ -63,7 +63,15 @@ export async function processArgs({ command, args, resolvable, state }: ProcessA
 	for (const [argId, data] of Object.entries(commandArgs)) {
 		let result = null;
 
-		const arg = (data.name.startsWith('--') ? constructToken(args.option(argId)) : args.many(1).at(0)) ?? constructToken(data.default);
+		let arg: Token | undefined;
+
+		if (data.name.startsWith('--')) {
+			let input = data.type === MessageArgumentType.Boolean ? String(args.flag(argId)) : args.option(argId);
+			arg = constructToken(input);
+		} else arg = args.many(1).at(0);
+
+		arg ??= constructToken(data.default);
+
 		const resolveFn = typeof data.type === 'function' ? data.type : Reflect.get(ResolverMixin, data.type);
 		if (!resolveFn) {
 			throw new ParseError(ParseErrorCode.ResolverNotFound, { argId, command, message: `Không tìm thấy resolver cho argument '${argId}'` });
